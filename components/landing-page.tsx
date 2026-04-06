@@ -163,8 +163,8 @@ const content = {
         submit: 'Envoyer le message'
       },
       info: {
-        email: 'miriyassine123@gmail.com',
-        phone: '+212 612 441 246',
+        email: 'elmehdi.birdaha98@gmail.com',
+        phone: '+212 778 508 973',
         address: 'Maroc'
       }
     },
@@ -305,8 +305,8 @@ const content = {
         submit: 'إرسال الرسالة'
       },
       info: {
-        email: 'miriyassine123@gmail.com',
-        phone: '+212 612 441 246',
+        email: 'elmehdi.birdaha98@gmail.com',
+        phone: '+212 778 508 973',
         address: 'المغرب'
       }
     },
@@ -497,7 +497,7 @@ export function LandingPage({ language, setLanguage, theme, setTheme, onLogin }:
             </div>
             <div className="rounded-2xl overflow-hidden border border-border shadow-lg">
               <img 
-                src="https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=600&h=400&fit=crop&q=80" 
+                src="https://i.ytimg.com/vi/ZUuzU8tuhdo/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGH8gKyg0MA8=&rs=AOn4CLCllcqt2CLuJA4tgVt5wwRl-3SA3A" 
                 alt="Modern dairy farm"
                 className="w-full h-full object-cover"
               />
