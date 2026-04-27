@@ -1,25 +1,13 @@
-// Feed database based on FILAHATI nutritional values
-export interface Feed {
-  id: string;
-  name: string;
-  nameFr: string;
-  nameAr: string;
-  category: 'forage' | 'concentrate' | 'mineral';
-  subCategory?: string;
-  ms: number; // Matière sèche %
-  ufl: number; // UFL/kg MS
-  ufv?: number; // UFV/kg MS
-  pdin: number; // g/kg MS
-  pdie: number; // g/kg MS
-  uel: number; // UEL/kg MS
-  ca: number; // g/kg MS
-  p: number; // g/kg MS
-  caAbs?: number; // Ca absorbable
-  pAbs?: number; // P absorbable
-}
+// C:\Users\PC\Desktop\Agricole\filahati\lib\feed-data.ts
+// Complete Feed Database with Nutritional Values
 
+import { Feed, AMV } from './calculations';
+
+// Complete list of feeds with their nutritional values
 export const defaultFeeds: Feed[] = [
-  // Fourrages - Ensilages
+  // ==========================================
+  // FORAGES - ENSILAGES
+  // ==========================================
   {
     id: '1',
     name: 'Corn Silage',
@@ -35,13 +23,16 @@ export const defaultFeeds: Feed[] = [
     uel: 1.05,
     ca: 3.5,
     p: 2.5,
-    caAbs: 0.8,
-    pAbs: 1.3
+    mg: 1.8,
+    na: 0.5,
+    k: 12,
+    cl: 4,
+    s: 1.5
   },
   {
     id: '2',
     name: 'Grass Silage',
-    nameFr: 'Ensilage d\'herbe',
+    nameFr: "Ensilage d'herbe",
     nameAr: 'سيلاج العشب',
     category: 'forage',
     subCategory: 'silage',
@@ -53,10 +44,37 @@ export const defaultFeeds: Feed[] = [
     uel: 1.10,
     ca: 6.0,
     p: 3.5,
-    caAbs: 1.4,
-    pAbs: 1.8
+    mg: 2.5,
+    na: 0.8,
+    k: 25,
+    cl: 5,
+    s: 2.0
   },
-  // Fourrages - Foins
+  {
+    id: '2a',
+    name: 'Lucerne Silage',
+    nameFr: 'Ensilage de luzerne',
+    nameAr: 'سيلاج البرسيم',
+    category: 'forage',
+    subCategory: 'silage',
+    ms: 40,
+    ufl: 0.75,
+    ufv: 0.68,
+    pdin: 120,
+    pdie: 85,
+    uel: 1.15,
+    ca: 14.0,
+    p: 3.0,
+    mg: 3.5,
+    na: 1.0,
+    k: 28,
+    cl: 3.5,
+    s: 2.5
+  },
+  
+  // ==========================================
+  // FORAGES - HAY (FOIN)
+  // ==========================================
   {
     id: '3',
     name: 'Alfalfa Hay',
@@ -72,13 +90,16 @@ export const defaultFeeds: Feed[] = [
     uel: 1.04,
     ca: 13.0,
     p: 2.1,
-    caAbs: 3.1,
-    pAbs: 1.1
+    mg: 3.0,
+    na: 0.8,
+    k: 22,
+    cl: 3.0,
+    s: 2.2
   },
   {
     id: '4',
     name: 'Oat Hay',
-    nameFr: 'Foin d\'avoine',
+    nameFr: "Foin d'avoine",
     nameAr: 'تبن الشوفان',
     category: 'forage',
     subCategory: 'hay',
@@ -90,8 +111,11 @@ export const defaultFeeds: Feed[] = [
     uel: 1.75,
     ca: 3.0,
     p: 2.5,
-    caAbs: 0.7,
-    pAbs: 1.3
+    mg: 1.5,
+    na: 0.5,
+    k: 18,
+    cl: 3.5,
+    s: 1.8
   },
   {
     id: '5',
@@ -108,10 +132,37 @@ export const defaultFeeds: Feed[] = [
     uel: 1.20,
     ca: 8.0,
     p: 2.8,
-    caAbs: 1.9,
-    pAbs: 1.4
+    mg: 2.2,
+    na: 0.6,
+    k: 20,
+    cl: 3.2,
+    s: 2.0
   },
-  // Fourrages - Pailles
+  {
+    id: '5a',
+    name: 'Ryegrass Hay',
+    nameFr: "Foin de ray-grass",
+    nameAr: 'تبن الريجراس',
+    category: 'forage',
+    subCategory: 'hay',
+    ms: 86,
+    ufl: 0.72,
+    ufv: 0.62,
+    pdin: 68,
+    pdie: 72,
+    uel: 1.18,
+    ca: 5.5,
+    p: 3.0,
+    mg: 2.0,
+    na: 0.7,
+    k: 24,
+    cl: 4.0,
+    s: 2.0
+  },
+  
+  // ==========================================
+  // FORAGES - STRAW (PAILLE)
+  // ==========================================
   {
     id: '6',
     name: 'Wheat Straw',
@@ -127,10 +178,37 @@ export const defaultFeeds: Feed[] = [
     uel: 2.0,
     ca: 2.0,
     p: 1.0,
-    caAbs: 0.5,
-    pAbs: 0.5
+    mg: 1.0,
+    na: 0.3,
+    k: 15,
+    cl: 2.5,
+    s: 1.2
   },
-  // Fourrages verts
+  {
+    id: '6a',
+    name: 'Barley Straw',
+    nameFr: 'Paille d\'orge',
+    nameAr: 'قش الشعير',
+    category: 'forage',
+    subCategory: 'straw',
+    ms: 87,
+    ufl: 0.38,
+    ufv: 0.28,
+    pdin: 20,
+    pdie: 40,
+    uel: 2.1,
+    ca: 2.5,
+    p: 0.8,
+    mg: 1.2,
+    na: 0.3,
+    k: 18,
+    cl: 3.0,
+    s: 1.0
+  },
+  
+  // ==========================================
+  // FORAGES - FRESH (VERT)
+  // ==========================================
   {
     id: '7',
     name: 'Fresh Berseem',
@@ -146,10 +224,37 @@ export const defaultFeeds: Feed[] = [
     uel: 0.85,
     ca: 15.0,
     p: 3.5,
-    caAbs: 3.6,
-    pAbs: 1.8
+    mg: 3.5,
+    na: 1.2,
+    k: 30,
+    cl: 4.5,
+    s: 2.5
   },
-  // Concentrés énergétiques
+  {
+    id: '7a',
+    name: 'Fresh Ryegrass',
+    nameFr: 'Ray-grass vert',
+    nameAr: 'ريجراس أخضر',
+    category: 'forage',
+    subCategory: 'fresh',
+    ms: 16,
+    ufl: 0.92,
+    ufv: 0.88,
+    pdin: 110,
+    pdie: 105,
+    uel: 0.95,
+    ca: 5.5,
+    p: 3.8,
+    mg: 2.5,
+    na: 1.0,
+    k: 28,
+    cl: 5.0,
+    s: 2.2
+  },
+  
+  // ==========================================
+  // ENERGY CONCENTRATES
+  // ==========================================
   {
     id: '8',
     name: 'Corn Grain',
@@ -165,8 +270,11 @@ export const defaultFeeds: Feed[] = [
     uel: 0,
     ca: 0.3,
     p: 2.2,
-    caAbs: 0.07,
-    pAbs: 1.1
+    mg: 1.0,
+    na: 0.1,
+    k: 3.5,
+    cl: 0.5,
+    s: 1.0
   },
   {
     id: '9',
@@ -183,8 +291,11 @@ export const defaultFeeds: Feed[] = [
     uel: 0,
     ca: 0.5,
     p: 3.5,
-    caAbs: 0.12,
-    pAbs: 1.8
+    mg: 1.2,
+    na: 0.1,
+    k: 4.5,
+    cl: 0.6,
+    s: 1.2
   },
   {
     id: '10',
@@ -201,8 +312,11 @@ export const defaultFeeds: Feed[] = [
     uel: 0,
     ca: 1.4,
     p: 12.2,
-    caAbs: 0.34,
-    pAbs: 6.1
+    mg: 5.0,
+    na: 0.5,
+    k: 12,
+    cl: 1.5,
+    s: 1.8
   },
   {
     id: '11',
@@ -219,10 +333,37 @@ export const defaultFeeds: Feed[] = [
     uel: 0,
     ca: 13.0,
     p: 1.0,
-    caAbs: 3.1,
-    pAbs: 0.5
+    mg: 2.5,
+    na: 0.3,
+    k: 2.5,
+    cl: 0.5,
+    s: 1.0
   },
-  // Concentrés azotés
+  {
+    id: '11a',
+    name: 'Molasses',
+    nameFr: 'Mélasse',
+    nameAr: 'دبس السكر',
+    category: 'concentrate',
+    subCategory: 'energy',
+    ms: 75,
+    ufl: 0.85,
+    ufv: 0.82,
+    pdin: 45,
+    pdie: 72,
+    uel: 0,
+    ca: 8.0,
+    p: 0.8,
+    mg: 2.0,
+    na: 0.5,
+    k: 35,
+    cl: 3.0,
+    s: 1.5
+  },
+  
+  // ==========================================
+  // PROTEIN CONCENTRATES (TOURTEAUX)
+  // ==========================================
   {
     id: '12',
     name: 'Soybean Meal 44',
@@ -238,8 +379,11 @@ export const defaultFeeds: Feed[] = [
     uel: 0,
     ca: 3.0,
     p: 6.1,
-    caAbs: 0.72,
-    pAbs: 3.05
+    mg: 3.0,
+    na: 0.3,
+    k: 20,
+    cl: 0.5,
+    s: 3.0
   },
   {
     id: '13',
@@ -256,8 +400,11 @@ export const defaultFeeds: Feed[] = [
     uel: 0,
     ca: 3.2,
     p: 6.5,
-    caAbs: 0.77,
-    pAbs: 3.25
+    mg: 3.2,
+    na: 0.3,
+    k: 21,
+    cl: 0.5,
+    s: 3.2
   },
   {
     id: '14',
@@ -274,8 +421,11 @@ export const defaultFeeds: Feed[] = [
     uel: 0,
     ca: 3.5,
     p: 10.0,
-    caAbs: 0.84,
-    pAbs: 5.0
+    mg: 5.0,
+    na: 0.4,
+    k: 15,
+    cl: 1.0,
+    s: 2.5
   },
   {
     id: '15',
@@ -292,10 +442,58 @@ export const defaultFeeds: Feed[] = [
     uel: 0,
     ca: 7.5,
     p: 11.5,
-    caAbs: 1.8,
-    pAbs: 5.75
+    mg: 4.5,
+    na: 0.5,
+    k: 13,
+    cl: 1.2,
+    s: 3.0
   },
-  // Concentré VL
+  {
+    id: '15a',
+    name: 'Cottonseed Meal',
+    nameFr: 'Tourteau de coton',
+    nameAr: 'كسب القطن',
+    category: 'concentrate',
+    subCategory: 'protein',
+    ms: 90,
+    ufl: 0.78,
+    ufv: 0.72,
+    pdin: 250,
+    pdie: 160,
+    uel: 0,
+    ca: 2.5,
+    p: 11.0,
+    mg: 4.0,
+    na: 0.3,
+    k: 16,
+    cl: 1.0,
+    s: 2.8
+  },
+  {
+    id: '15b',
+    name: 'Peanut Meal',
+    nameFr: 'Tourteau d\'arachide',
+    nameAr: 'كسب الفول السوداني',
+    category: 'concentrate',
+    subCategory: 'protein',
+    ms: 90,
+    ufl: 0.88,
+    ufv: 0.82,
+    pdin: 280,
+    pdie: 185,
+    uel: 0,
+    ca: 3.0,
+    p: 6.0,
+    mg: 3.5,
+    na: 0.3,
+    k: 14,
+    cl: 0.8,
+    s: 2.5
+  },
+  
+  // ==========================================
+  // COMPOUND FEEDS (CONCENTRÉS VL)
+  // ==========================================
   {
     id: '16',
     name: 'Dairy Concentrate VL',
@@ -311,10 +509,37 @@ export const defaultFeeds: Feed[] = [
     uel: 0,
     ca: 10.0,
     p: 6.0,
-    caAbs: 2.4,
-    pAbs: 3.0
+    mg: 3.5,
+    na: 2.0,
+    k: 10,
+    cl: 2.5,
+    s: 2.0
   },
-  // Minéraux
+  {
+    id: '16a',
+    name: 'High Yield Concentrate',
+    nameFr: 'Concentré Haute Production',
+    nameAr: 'علف مركز إنتاج عالي',
+    category: 'concentrate',
+    subCategory: 'compound',
+    ms: 88,
+    ufl: 1.05,
+    ufv: 1.02,
+    pdin: 140,
+    pdie: 130,
+    uel: 0,
+    ca: 12.0,
+    p: 7.0,
+    mg: 4.0,
+    na: 2.5,
+    k: 12,
+    cl: 3.0,
+    s: 2.2
+  },
+  
+  // ==========================================
+  // MINERALS AND ADDITIVES
+  // ==========================================
   {
     id: '17',
     name: 'Calcium Carbonate',
@@ -329,8 +554,11 @@ export const defaultFeeds: Feed[] = [
     uel: 0,
     ca: 400,
     p: 0,
-    caAbs: 160,
-    pAbs: 0
+    mg: 0,
+    na: 0,
+    k: 0,
+    cl: 0,
+    s: 0
   },
   {
     id: '18',
@@ -346,49 +574,98 @@ export const defaultFeeds: Feed[] = [
     uel: 0,
     ca: 260,
     p: 180,
-    caAbs: 104,
-    pAbs: 117
+    mg: 0,
+    na: 0,
+    k: 0,
+    cl: 0,
+    s: 0
+  },
+  {
+    id: '19',
+    name: 'Sodium Bicarbonate',
+    nameFr: 'Bicarbonate de sodium',
+    nameAr: 'بيكربونات الصوديوم',
+    category: 'mineral',
+    subCategory: 'buffer',
+    ms: 100,
+    ufl: 0,
+    pdin: 0,
+    pdie: 0,
+    uel: 0,
+    ca: 0,
+    p: 0,
+    mg: 0,
+    na: 270,
+    k: 0,
+    cl: 0,
+    s: 0
+  },
+  {
+    id: '20',
+    name: 'Magnesium Oxide',
+    nameFr: 'Oxyde de magnésium',
+    nameAr: 'أكسيد المغنيسيوم',
+    category: 'mineral',
+    subCategory: 'magnesium',
+    ms: 100,
+    ufl: 0,
+    pdin: 0,
+    pdie: 0,
+    uel: 0,
+    ca: 0,
+    p: 0,
+    mg: 600,
+    na: 0,
+    k: 0,
+    cl: 0,
+    s: 0
+  },
+  {
+    id: '21',
+    name: 'Propylene Glycol',
+    nameFr: 'Propylène Glycol (Propaline)',
+    nameAr: 'بروبيلين جليكول',
+    category: 'mineral',
+    subCategory: 'additive',
+    ms: 100,
+    ufl: 0,
+    pdin: 0,
+    pdie: 0,
+    uel: 0,
+    ca: 0,
+    p: 0,
+    mg: 0,
+    na: 0,
+    k: 0,
+    cl: 0,
+    s: 0
   }
 ];
 
-// AMV (Aliment Minéral Vitaminé) options based on Ca/P ratio
-export interface AMV {
-  id: string;
-  name: string;
-  nameFr: string;
-  nameAr: string;
-  caPercent: number;
-  pPercent: number;
-  ratio: number;
-}
-
-export const amvOptions: AMV[] = [
-  { id: 'amv1', name: '5/25', nameFr: 'AMV 5/25', nameAr: 'AMV 5/25', caPercent: 25, pPercent: 5, ratio: 5 },
-  { id: 'amv2', name: '5/20', nameFr: 'AMV 5/20', nameAr: 'AMV 5/20', caPercent: 20, pPercent: 5, ratio: 4 },
-  { id: 'amv3', name: '7/21', nameFr: 'AMV 7/21', nameAr: 'AMV 7/21', caPercent: 21, pPercent: 7, ratio: 3 },
-  { id: 'amv4', name: '8/16', nameFr: 'AMV 8/16', nameAr: 'AMV 8/16', caPercent: 16, pPercent: 8, ratio: 2 },
-  { id: 'amv5', name: '10/20', nameFr: 'AMV 10/20', nameAr: 'AMV 10/20', caPercent: 20, pPercent: 10, ratio: 2 },
-  { id: 'amv6', name: '12/22', nameFr: 'AMV 12/22', nameAr: 'AMV 12/22', caPercent: 22, pPercent: 12, ratio: 1.83 },
-  { id: 'amv7', name: '8/12', nameFr: 'AMV 8/12', nameAr: 'AMV 8/12', caPercent: 12, pPercent: 8, ratio: 1.5 },
-  { id: 'amv8', name: '10/10', nameFr: 'AMV 10/10', nameAr: 'AMV 10/10', caPercent: 10, pPercent: 10, ratio: 1 },
-  { id: 'amv9', name: '12/12', nameFr: 'AMV 12/12', nameAr: 'AMV 12/12', caPercent: 12, pPercent: 12, ratio: 1 },
-  { id: 'amv10', name: '16/16', nameFr: 'AMV 16/16', nameAr: 'AMV 16/16', caPercent: 16, pPercent: 16, ratio: 1 },
-  { id: 'amv11', name: '12/8', nameFr: 'AMV 12/8', nameAr: 'AMV 12/8', caPercent: 8, pPercent: 12, ratio: 0.67 },
-  { id: 'amv12', name: '20/15', nameFr: 'AMV 20/15', nameAr: 'AMV 20/15', caPercent: 15, pPercent: 20, ratio: 0.75 },
+// Export AMV options
+export const amvOptions = [
+  { id: 'amv1', name: '5/25', nameFr: 'AMV 5/25', nameAr: 'AMV 5/25', caPercent: 25, pPercent: 5, mgPercent: 3, naPercent: 5, ratio: 5 },
+  { id: 'amv2', name: '5/20', nameFr: 'AMV 5/20', nameAr: 'AMV 5/20', caPercent: 20, pPercent: 5, mgPercent: 3, naPercent: 5, ratio: 4 },
+  { id: 'amv3', name: '7/21', nameFr: 'AMV 7/21', nameAr: 'AMV 7/21', caPercent: 21, pPercent: 7, mgPercent: 4, naPercent: 6, ratio: 3 },
+  { id: 'amv4', name: '8/16', nameFr: 'AMV 8/16', nameAr: 'AMV 8/16', caPercent: 16, pPercent: 8, mgPercent: 4, naPercent: 6, ratio: 2 },
+  { id: 'amv5', name: '10/20', nameFr: 'AMV 10/20', nameAr: 'AMV 10/20', caPercent: 20, pPercent: 10, mgPercent: 3, naPercent: 5, ratio: 2 },
+  { id: 'amv6', name: '12/22', nameFr: 'AMV 12/22', nameAr: 'AMV 12/22', caPercent: 22, pPercent: 12, mgPercent: 4, naPercent: 6, ratio: 1.83 },
+  { id: 'amv7', name: '8/12', nameFr: 'AMV 8/12', nameAr: 'AMV 8/12', caPercent: 12, pPercent: 8, mgPercent: 5, naPercent: 7, ratio: 1.5 },
+  { id: 'amv8', name: '10/10', nameFr: 'AMV 10/10', nameAr: 'AMV 10/10', caPercent: 10, pPercent: 10, mgPercent: 5, naPercent: 7, ratio: 1 },
+  { id: 'amv9', name: '12/12', nameFr: 'AMV 12/12', nameAr: 'AMV 12/12', caPercent: 12, pPercent: 12, mgPercent: 4, naPercent: 6, ratio: 1 },
+  { id: 'amv10', name: '16/16', nameFr: 'AMV 16/16', nameAr: 'AMV 16/16', caPercent: 16, pPercent: 16, mgPercent: 3, naPercent: 5, ratio: 1 },
+  { id: 'amv11', name: '12/8', nameFr: 'AMV 12/8', nameAr: 'AMV 12/8', caPercent: 8, pPercent: 12, mgPercent: 5, naPercent: 7, ratio: 0.67 },
+  { id: 'amv12', name: '20/15', nameFr: 'AMV 20/15', nameAr: 'AMV 20/15', caPercent: 15, pPercent: 20, mgPercent: 3, naPercent: 5, ratio: 0.75 }
 ];
 
-// Choose AMV based on Ca/P ratio of deficit
-export function selectAMV(caDeficit: number, pDeficit: number): AMV | null {
+export function selectAMV(caDeficit: number, pDeficit: number) {
   if (pDeficit <= 0) return null;
   const ratio = caDeficit / pDeficit;
   
-  if (ratio > 1.7) {
-    return amvOptions.find(amv => amv.ratio >= 3) || amvOptions[0];
-  } else if (ratio >= 1.1 && ratio <= 1.7) {
-    return amvOptions.find(amv => amv.ratio >= 1.5 && amv.ratio < 2) || amvOptions[6];
-  } else if (ratio >= 0.9 && ratio < 1.1) {
-    return amvOptions.find(amv => amv.ratio === 1) || amvOptions[7];
-  } else {
-    return amvOptions.find(amv => amv.ratio < 1) || amvOptions[10];
-  }
+  if (ratio > 3) return amvOptions.find(amv => amv.ratio >= 3) || amvOptions[0];
+  if (ratio >= 2) return amvOptions.find(amv => amv.ratio >= 2 && amv.ratio < 3) || amvOptions[3];
+  if (ratio >= 1.5) return amvOptions.find(amv => amv.ratio >= 1.5 && amv.ratio < 2) || amvOptions[6];
+  if (ratio >= 1) return amvOptions.find(amv => amv.ratio === 1) || amvOptions[7];
+  if (ratio >= 0.75) return amvOptions.find(amv => amv.ratio < 1 && amv.ratio >= 0.75) || amvOptions[11];
+  return amvOptions.find(amv => amv.ratio < 0.75) || amvOptions[10];
 }
